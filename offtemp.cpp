@@ -9,18 +9,18 @@ class Offurniture {
 private:
 	T ID;
 protected:
-	char *name;
-	char *country;
+	char* name;
+	char* country;
 	T cost;
 public:
 	Offurniture();
-	Offurniture(char *n);
-	Offurniture(char *n, T a, char *co, T c);
-	Offurniture(char *n, char *co, T c);
+	Offurniture(char* n);
+	Offurniture(char* n, T a, char* co, T c);
+	Offurniture(char* n, char* co, T c);
 	void print()const;
-	Offurniture(const Offurniture &m);
-	void input(char *n, T a, char *co, T c);
-	Offurniture &copy(const Offurniture &m);
+	Offurniture(const Offurniture& m);
+	void input(char* n, T a, char* co, T c);
+	Offurniture& copy(const Offurniture& m);
 	Offurniture sum(Offurniture b);
 	bool comp(Offurniture b);
 	~Offurniture();
@@ -28,9 +28,9 @@ public:
 	Offurniture operator +(T m);
 	Offurniture operator -(const Offurniture m);
 	Offurniture operator -(T m);
-	Offurniture operator =(const Offurniture m);
-	Offurniture operator =(T m);
-	bool operator <(Offurniture m);
+	Offurniture& operator =(const Offurniture m);/* возвращаемый тип&*/
+		Offurniture& operator =(T m);              /*  возвращаемый тип&*/
+		bool operator <(Offurniture m);
 	bool operator <(T m);
 	bool operator >(Offurniture m);
 	bool operator >(T m);
@@ -48,9 +48,9 @@ public:
 	Setofitems();
 	Setofitems(const Setofitems& m);
 	~Setofitems();
-	Setofitems &copy(Setofitems &m);
+	Setofitems& copy(Setofitems& m);
 	void input(char* n, char* co, double c, int aoi, bool ps);
-	
+
 };
 
 
@@ -61,7 +61,7 @@ bool Offurniture<T>::comp(Offurniture<T> b) {
 }
 
 template <class T>
-Offurniture<T> &Offurniture<T>::copy(const Offurniture<T> &m) {
+Offurniture<T>& Offurniture<T>::copy(const Offurniture<T>& m) {
 	if (&m != this) {
 		delete[]name;
 		delete[]country;
@@ -76,7 +76,7 @@ Offurniture<T> &Offurniture<T>::copy(const Offurniture<T> &m) {
 }
 
 template <class T>
-void Offurniture<T>::input(char *n, T a, char *co, T c) {
+void Offurniture<T>::input(char* n, T a, char* co, T c) {
 	strcpy(name, n);
 	ID = a;
 	strcpy(country, co);
@@ -153,7 +153,7 @@ Offurniture<T> Offurniture<T>::operator -(T m) {
 }
 
 template <class T>
-Offurniture<T> Offurniture<T>::operator =(const Offurniture<T> m) {
+Offurniture<T>& Offurniture<T>::operator =(const Offurniture<T> m) {
 	strcpy(name, m.name);
 	ID = m.ID;
 	strcpy(country, m.country);
@@ -163,29 +163,29 @@ Offurniture<T> Offurniture<T>::operator =(const Offurniture<T> m) {
 
 
 template <class T>
-Offurniture<T> Offurniture<T>::operator =(T m) {
-	cost =  m;
+Offurniture<T>& Offurniture<T>::operator =(T m) {
+	cost = m;
 	return(*this);
 }
 
 template <class T>
 bool Offurniture<T>::operator <(const Offurniture<T> m) {
-	return(cost<m.cost);
+	return(cost < m.cost);
 }
 
 template <class T>
 bool Offurniture<T>::operator <(T m) {
-	return(cost<m);
+	return(cost < m);
 }
 
 template <class T>
 bool Offurniture<T>::operator >(const Offurniture<T> m) {
-	return(cost>m.cost);
+	return(cost > m.cost);
 }
 
 template <class T>
 bool Offurniture<T>::operator >(T m) {
-	return(cost>m);
+	return(cost > m);
 }
 
 template <class T>
@@ -199,7 +199,7 @@ bool Offurniture<T>::operator ==(T m) {
 }
 
 template <class T>
-Offurniture<T>::Offurniture<T>(const Offurniture<T> &m) {
+Offurniture<T>::Offurniture<T>(const Offurniture<T>& m) {
 	name = new char[strlen(m.name) + 1];
 	strcpy(name, m.name);
 	ID = m.ID;
@@ -209,7 +209,7 @@ Offurniture<T>::Offurniture<T>(const Offurniture<T> &m) {
 }
 
 template <class T>
-Offurniture<T>::Offurniture<T>(char *n, T a, char *co, T c) {
+Offurniture<T>::Offurniture<T>(char* n, T a, char* co, T c) {
 	name = new char[strlen(n) + 1];
 	strcpy(name, n);
 	ID = a;
@@ -219,7 +219,7 @@ Offurniture<T>::Offurniture<T>(char *n, T a, char *co, T c) {
 }
 
 template <class T>
-Offurniture<T>::Offurniture<T>(char *n, char *co, T c) {
+Offurniture<T>::Offurniture<T>(char* n, char* co, T c) {
 	name = new char[strlen(n) + 1];
 	strcpy(name, n);
 	country = new char[strlen(co) + 1];
@@ -229,7 +229,7 @@ Offurniture<T>::Offurniture<T>(char *n, char *co, T c) {
 
 template <class T>
 void Offurniture<T>::print()const {
-	if (name!="") cout << "Название предмета мебели: " << name << endl;
+	if (name != "") cout << "Название предмета мебели: " << name << endl;
 	if (ID >= 0) cout << "ID предмета мебели:" << ID << endl;
 	if (country != "") cout << "Страна-производитель: " << country << endl;
 	if (cost >= 0) cout << "Стоимость предмета мебели(в рублях) :" << cost << endl;
@@ -242,24 +242,19 @@ void Setofitems::print() {
 	else cout << "Покупка отдельных элементов набора невозможна" << endl;
 }
 
-Setofitems::Setofitems(char *n, char *co, double c, int aoi, bool ps):Offurniture<double>(n, co, c){
+Setofitems::Setofitems(char* n, char* co, double c, int aoi, bool ps) :Offurniture<double>(n, co, c) {
 	amountofitems = aoi;
 	partsale = ps;
 }
 
-Setofitems::Setofitems() : Offurniture<double>(){
+Setofitems::Setofitems() : Offurniture<double>() {
 	amountofitems = 0;
 	partsale = 0;
 }
 
-Setofitems::Setofitems(const Setofitems& m) {
-	name = new char[strlen(m.name) + 1];
-	strcpy(name, m.name);
+Setofitems::Setofitems(const Setofitems& m): Offurniture<double>(m) {
 	amountofitems = m.amountofitems;
 	partsale = m.partsale;
-	country = new char[strlen(m.country) + 1];
-	strcpy(country, m.country);
-	cost = m.cost;
 }
 
 Setofitems& Setofitems::copy(Setofitems& m) {
@@ -278,8 +273,7 @@ Setofitems& Setofitems::copy(Setofitems& m) {
 }
 
 Setofitems::~Setofitems() {
-	delete[]name;
-	delete[]country;
+	Offurniture<double>::~Offurniture<double>();
 }
 
 void Setofitems::input(char* n, char* co, double c, int aoi, bool ps) {
@@ -300,16 +294,8 @@ int main()
 {
 	setlocale(LC_ALL, "russian");
 	Offurniture<int> a("Стол прямолинейный Эконом", 5413, "Россия", 1470);
-	Offurniture<int> b("Стеллаж высокий узкий NOVA S", 24349, "Россия", 2524);
-	Offurniture<int> c("Табурет СуперЭконом", 55535, "Россия", 100);
-	cout << "Объект а c параметрами типа int" << endl;
+	cout << "Объект а базового класса c параметрами типа int" << endl;
 	a.print();
-	cout << endl;
-	cout << "Объект b c параметрами типа int" << endl;
-	b.print();
-	cout << endl;
-	cout << "Объект c c параметрами типа int" << endl;
-	c.print();
 	cout << endl;
 	Setofitems set1("Комплект мебели NOVA S", "Россия", 100000, 7, 1);
 	cout << "Объект set1 Производного класса Setofitems" << endl;
@@ -319,16 +305,28 @@ int main()
 	cout << "Объект set2 Производного класса Setofitems" << endl;
 	set2.print();
 	cout << endl;
-	cout << "Копия объекта set2:" << endl;
-	Setofitems set3(set2);
+	cout << "Тестирование функции копирования производного класса (копия объекта set2):" << endl;
+	Setofitems set3;
+	set3.copy(set2);
 	set3.print();
 	cout << endl;
-	cout << "Использование оператора input и перегруженного оператора сложения базового класса на объекте set1:" << endl;
+	cout << "Тестирование функции копирования базового класса (копия объекта set1):" << endl;
+	Setofitems set4;
+	set4.Offurniture<double>::copy(set1);
+	set4.print();
+	cout << endl;
+	cout << "Использование оператора input БК и перегруженного оператора сложения БК на объекте set1:" << endl;
 	set1.input("Изменённое имя", "изменённая страна", 110, 40, 1);
 	set1 + 12345;
 	set1.print();
 	cout << endl;
+	cout << "Объект set5 с параметрами по умолчанию, на котором была использована функция input базового класса:" << endl;
+	Setofitems set5;
+	set5.Offurniture<double>::input("Комплект мебели", 0, "Китай", 680);
+	set5.print();
+	cout << endl;
+	if(set1 > 100) cout << "set1 больше 100 по стоимости согласно оператору сравнения базового класса" << endl;
+	else cout << "set1 меньше 100 по стоимости согласно оператору сравнения базового класса" << endl;
 	system("pause");
 	return 0;
 }
-
